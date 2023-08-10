@@ -1,7 +1,6 @@
 package com.niska;
 
 import android.app.Application;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -25,7 +24,7 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
-          packages.add(new SplashScreenReactPackage());
+          // packages.add(new SplashScreenReactPackage());
           return packages;
         }
 
