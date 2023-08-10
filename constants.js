@@ -1,5 +1,10 @@
+import {Dimensions} from 'react-native';
 const STRING = {
   appName: 'Niska',
+  size: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
   colors: {
     black: '#000000',
     screen: '#151515',

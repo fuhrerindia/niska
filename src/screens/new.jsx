@@ -1,10 +1,11 @@
-import {View, Text} from 'react-native';
 import React from 'react';
+import Header from '../comp/header';
+import Scaffold from '../comp/scaffold';
 
 export default function New() {
   return (
-    <View>
-      <Text>New</Text>
-    </View>
+    <Scaffold>
+      <Header title={'New\nTransaction'} />
+    </Scaffold>
   );
 }
