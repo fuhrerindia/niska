@@ -37,6 +37,7 @@ const BOTTOM_TAB_ICONS = {
     tabBarShowLabel: false,
     tabBarStyle: {
       backgroundColor: STRING.colors.primary,
+      borderTopWidth: 0,
     },
     tabBarIconStyle: {
       fontSize: 50,
