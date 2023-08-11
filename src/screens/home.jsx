@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Header from '../comp/header';
 import Scaffold from '../comp/scaffold';
 import {
@@ -11,13 +11,34 @@ import {
 import RecordItem from '../comp/record-item';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import STRING from '../../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Progress from '../comp/progress';
+import EmptyComponent from '../comp/nothing-found';
 
 const ScreenHeader = () => <Header title={'Past\nExpenses'} />;
 
 export default function Home() {
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const [records, setRecords] = useState([]);
 
+  async function fetchItems() {
+    try {
+      let value = await AsyncStorage.getItem('user');
+      if (value != null) {
+        value = JSON.parse(value);
+        setRecords([...value]);
+      }
+      setLoaded(true);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
   function onLongPress() {
     if (selectionMode !== true) {
       setSelectionMode(true);
@@ -74,25 +95,23 @@ export default function Home() {
         </View>
       ) : null}
 
-      <FlatList
-        ListHeaderComponent={ScreenHeader}
-        renderItem={itemToRender}
-        keyExtractor={item => item.id}
-        data={[
-          {
-            amount: 500,
-            credit: true,
-            remarks: 'Hello world',
-            id: '1',
-          },
-          {
-            amount: 500,
-            credit: true,
-            remarks: '    ',
-            id: '2',
-          },
-        ]}
-      />
+      {loaded ? (
+        <FlatList
+          ListHeaderComponent={ScreenHeader}
+          renderItem={itemToRender}
+          keyExtractor={item => item.id}
+          initialNumToRender={10}
+          data={records}
+          ListEmptyComponent={EmptyComponent}
+          style={style.page}
+          contentContainerStyle={records.length === 0 ? style.page : null}
+        />
+      ) : (
+        <>
+          <ScreenHeader />
+          <Progress />
+        </>
+      )}
     </Scaffold>
   );
 }
@@ -115,5 +134,8 @@ const style = StyleSheet.create({
   },
   red: {
     color: STRING.colors.red,
+  },
+  page: {
+    flex: 1,
   },
 });

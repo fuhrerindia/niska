@@ -21,7 +21,9 @@ export default function App() {
         barStyle="light-content"
       />
       <NavigationContainer>
-        <Tab.Navigator screenOptions={BOTTOM_TAB_ICONS.screenOptions}>
+        <Tab.Navigator
+          screenOptions={BOTTOM_TAB_ICONS.screenOptions}
+          initialRouteName="New">
           <Tab.Screen
             name="Home"
             component={Home}
